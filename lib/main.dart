@@ -56,6 +56,12 @@ class MyHomePage extends StatefulWidget {
 //           message.toString());
 // }
 
+void _onInAppSelfHandle(SelfHandledCampaign message) {
+  print(
+      "This is a callback on inapp self handle from native to flutter. Payload " +
+          message.toString());
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -63,11 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+// when this is attached, we're getting data in callback
     _moengagePlugin.setSelfHandledInAppHandler((data) {
       print(
           "This is a callback on inapp self handle from native to flutter. Payload " +
               data.toString());
     });
+
+// when this is attached, we're not getting the data
+    _moengagePlugin.setSelfHandledInAppHandler(_onInAppSelfHandle);
 
     _moengagePlugin.initialise();
     _moengagePlugin.showInApp();
